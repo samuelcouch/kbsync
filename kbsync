@@ -1,20 +1,27 @@
 #!/bin/bash
 
 KEYBASE_CMD="keybase"
-KEYBASE_NOT_AVAIL=$(which $KEYBASE_CMD 2>/dev/null | grep -v "not found" | wc -l)
+KEYBASE_AVAIL=$(which $KEYBASE_CMD 2>/dev/null | grep -v "not found" | wc -l)
 GPG_CMD="gpg"
-GPG_NOT_AVAIL=$(which $GPG_CMD 2>/dev/null | grep -v "not found" | wc -l)
+GPG_AVAIL=$(which $GPG_CMD 2>/dev/null | grep -v "not found" | wc -l)
+CURL_CMD="curl"
+CURL_AVAIL=$(which $CURL_CMD 2>/dev/null | grep -v "not found" | wc -l)
 
 KILL_FLAG=0
 
 
-if [ $KEYBASE_NOT_AVAIL -eq 0 ]; then
+if [ $KEYBASE_AVAIL -eq 0 ]; then
   echo "Keybase is not installed."
   KILL_FLAG=1
 fi
 
-if [ $GPG_NOT_AVAIL -eq 0 ]; then
+if [ $GPG_AVAIL -eq 0 ]; then
   echo "GPG is not installed."
+  KILL_FLAG=1
+fi
+
+if [ $CURL_AVAIL -eq 0 ]; then
+  echo "Curl is not installed."
   KILL_FLAG=1
 fi
 
