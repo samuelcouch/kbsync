@@ -9,20 +9,20 @@ KILL_FLAG=0
 
 
 if [ $KEYBASE_NOT_AVAIL -eq 0 ] ; then
-	echo "Keybase is not installed."
+  echo "Keybase is not installed."
 	KILL_FLAG=1
 fi
 
 if [ $GPG_NOT_AVAIL -eq 0 ]; then
-	echo "GPG is not installed."
-	KILL_FLAG=1
+  echo "GPG is not installed."
+  KILL_FLAG=1
 fi
 
 if [ $KILL_FLAG -eq 1 ]; then
-	exit 1
+  exit 1
 fi
 
 for user in $(keybase list-tracking); do
-	curl https://keybase.io/"$user"/key.asc --silent | gpg --import --quiet;
-	echo "Synced $user"
+  curl https://keybase.io/"$user"/key.asc --silent | gpg --import --quiet;
+  echo "Synced $user"
 done
