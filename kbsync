@@ -8,9 +8,9 @@ GPG_NOT_AVAIL=$(which $GPG_CMD 2>/dev/null | grep -v "not found" | wc -l)
 KILL_FLAG=0
 
 
-if [ $KEYBASE_NOT_AVAIL -eq 0 ] ; then
+if [ $KEYBASE_NOT_AVAIL -eq 0 ]; then
   echo "Keybase is not installed."
-	KILL_FLAG=1
+  KILL_FLAG=1
 fi
 
 if [ $GPG_NOT_AVAIL -eq 0 ]; then
