@@ -1,0 +1,28 @@
+#!/bin/bash
+
+KEYBASE_CMD="keybase"
+KEYBASE_NOT_AVAIL=$(which $KEYBASE_CMD 2>/dev/null | grep -v "not found" | wc -l)
+GPG_CMD="gpg"
+GPG_NOT_AVAIL=$(which $GPG_CMD 2>/dev/null | grep -v "not found" | wc -l)
+
+KILL_FLAG=0
+
+
+if [ $KEYBASE_NOT_AVAIL -eq 0 ] ; then
+	echo "Keybase is not installed."
+	KILL_FLAG=1
+fi
+
+if [ $GPG_NOT_AVAIL -eq 0 ]; then
+	echo "GPG is not installed."
+	KILL_FLAG=1
+fi
+
+if [ $KILL_FLAG -eq 1 ]; then
+	exit 1
+fi
+
+for user in $(keybase list-tracking); do
+	curl https://keybase.io/"$user"/key.asc --silent | gpg --import --quiet;
+	echo "Imported $user"
+done
